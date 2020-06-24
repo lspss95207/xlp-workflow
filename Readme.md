@@ -1,6 +1,10 @@
-It is a readme file 
+This project is to create a workflow to build BigBlueButton, the video conference software as a Docker image.
 
-install docker 
+Before using any of the instructions, one should check Docker Preference settings.
+
+For Docker Desktop systems, one must go into Docker Preference -> Resources and set Memory to 4Gb.  
+
+install docker
 
 
 - pull image from online repository
