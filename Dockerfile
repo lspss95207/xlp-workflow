@@ -7,4 +7,4 @@ RUN apt-get install -y sudo && apt-get\
 RUN sudo su
 ADD bbb-install.sh .
 RUN chmod +x bbb-install.sh
-RUN ./bbb-install.sh
+RUN ./bbb-install.sh -s -- -v xenial-22 -s localhost
