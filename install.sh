@@ -1,0 +1,2 @@
+#wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-22 -s bbb.toyhouse.cc -e xlp2mit@gmail.com -w -g
+wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-22
