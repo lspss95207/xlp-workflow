@@ -13,10 +13,10 @@ install docker
 $ docker login
 $ docker pull <image_name>
 ~~~
-where <image_name> refers to 'juanluisbaptiste/bigbluebutton:2.0-beta0' from  
+where <image_name> refers to __juanluisbaptiste/bigbluebutton:2.0-beta0__ from  
 https://github.com/juanluisbaptiste/ansible-bigbluebutton](https://github.com/juanluisbaptiste/ansible-bigbluebutton
 
-juanluisbaptiste has supported several features in Ansible-Roll-installed BigBlueButton platform.
+___juanluisbaptiste___ has supported several features in Ansible-Roll-installed BigBlueButton platform.
 
 
 ### Start bbb after having the image
