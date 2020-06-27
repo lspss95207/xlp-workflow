@@ -1,11 +1,51 @@
-This project is to create a workflow to build BigBlueButton, the video conference software as a Docker image.
+This project is to create a workflow to build BigBlueButton, the video conference software.
+
+## install developer version
+
+> Referrence: https://www.jianshu.com/p/4ec45e8eae5e
+
+### environment
+
+- Ubuntu 16.04 x64.
+- You can loggin as root.
+- More than 4GB memory.
+- More than 4 CPUs.
+
+### install
+
+``` bash
+wget https://ubuntu.bigbluebutton.org/bbb-install.sh
+chmod 744 bbb-install.sh
+sudo ./bbb-install.sh -v xenial-220 -a
+```
+Then, use `bbb-conf --secret` to get the address of the website.  
+For example:
+
+``` bash
+    URL: http://192.168.0.102/bigbluebutton/
+    Secret: tX6iL78oKtkYODBznclOkFeVkLvriDbsbx33XznhCs
+
+    Link to the API-Mate:
+    https://mconf.github.io/api-mate/#server=http://192.168.0.102/bigbluebutton/&sharedSecret=tX6iL78oKtkYODBznclOkFeVkLvriDbsbx33XznhCs
+```
+
+Then you can visit the website on 192.168.0.102, and try a meeting session.
+
+You may find that the website cannot access audio and video. Don't worry, I don't know how to fix that. Just ignore those annoying issues, and focus on developing chatting room.
+
+If the chatting room has no problem, make a folder and run
+
+``` bash
+git clone https://github.com/bigbluebutton/bigbluebutton.git
+```
+
+After that, follow the steps on https://docs.bigbluebutton.org/2.2/dev.html. Then the development environment is set up.
+
+## install docker version
 
 Before using any of the instructions, one should check Docker Preference settings.
 
 For Docker Desktop systems, one must go into Docker Preference -> Resources and set Memory to 4Gb.  
-
-install docker
-
 
 ### Pull image from online repository
 
