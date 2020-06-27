@@ -10,11 +10,14 @@ install docker
 - pull image from online repository
 
 ~~~shell
-$ docker pull ubuntu:16.04
+$ docker login
+$ docker pull juanluisbaptiste/bigbluebutton:2.0-beta0
 ~~~
 
-- pull image from local registry
-
+- start bbb after having the image
+~~~shell
+$ docker run <image_name> -it exec ./bbb-start.sh
+~~~
 
 
 
@@ -29,3 +32,17 @@ $ docker-compose -f docker-compose.yml up
 則會以attach的方式開啟registry.  
 
 接下來欲測試Volume
+
+- push image to local registry 
+~~~shell
+$ docker tag <image_name> 0.0.0.0:5000/<img_name>:<version_name> 
+$ docker push <image_name> 
+~~~
+
+- pull image from local registry
+~~~shell
+$docker pull 0.0.0.0:5000/<img_name>:<version_name> 
+~~~
+
+
+
