@@ -34,6 +34,12 @@ $ docker-compose -f docker-compose.yml up
 接下來欲測試Volume
 
 - push image to local registry 
+
+Open docker-desktop/preferences/docker-engine and edit the json file, adding:
+~~~shell
+"insecure-registries" : ["0.0.0.0:5000"]
+~~~
+
 ~~~shell
 $ docker tag <image_name> 0.0.0.0:5000/<img_name>:<version_name> 
 $ docker push <image_name> 
