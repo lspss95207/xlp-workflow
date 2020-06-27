@@ -7,7 +7,7 @@ For Docker Desktop systems, one must go into Docker Preference -> Resources and 
 install docker
 
 
-- pull image from online repository
+### pull image from online repository
 
 ~~~shell
 $ docker login
@@ -19,7 +19,7 @@ https://github.com/juanluisbaptiste/ansible-bigbluebutton](https://github.com/ju
 juanluisbaptiste has supported several features in Ansible-Roll-installed BigBlueButton platform.
 
 
-- start bbb after having the image
+### start bbb after having the image
 ~~~shell
 $ docker run <image_name> -d -it
 ~~~
@@ -34,7 +34,7 @@ $ docker exec <container_id> ./bbb-start.sh
 to start bbb. 
 
 
-- local registry
+### local registry
 
 Place docker-compose.yml in the file and allow 0.0.0.0:5000/tcp open
 
@@ -44,9 +44,9 @@ $ docker-compose -f docker-compose.yml up
 
   
 
-- Docker register volume configuration
+### Docker register volume configuration
 
-- push image to local registry 
+### push image to local registry 
 
 Open Docker-Desktop/Preferences/Docker-Engine and edit the file, adding:
 ~~~shell
@@ -60,7 +60,7 @@ $ docker push <image_name>
 
 
 
-- pull image from local registry
+### pull image from local registry
 ~~~shell
 $docker pull 0.0.0.0:5000/<img_name>:<version_name> 
 ~~~
