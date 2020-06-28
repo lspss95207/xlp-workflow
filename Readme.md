@@ -13,12 +13,13 @@ This project is to create a workflow to build BigBlueButton, the video conferenc
 
 ### install
 
+#### install server
 ``` bash
 wget https://ubuntu.bigbluebutton.org/bbb-install.sh
 chmod 744 bbb-install.sh
 sudo ./bbb-install.sh -v xenial-220 -a
 ```
-Then, use `bbb-conf --secret` to get the address of the website.  
+Then, use `bbb-conf --secret` to get the address of the website. (If the server is not started, run `bbb-conf --start`)  
 For example:
 
 ``` bash
@@ -33,13 +34,108 @@ Then you can visit the website on 192.168.0.102, and try a meeting session.
 
 You may find that the website cannot access audio and video. Don't worry, I don't know how to fix that. Just ignore those annoying issues, and focus on developing chatting room.
 
-If the chatting room has no problem, make a folder and run
+#### set up development environment
 
+If the chatting room has no problem, it means we have a runnable service, and all we need is to set up the development environment.
+
+> Referrence: https://docs.bigbluebutton.org/2.2/dev.html#setup-a-development-environment.
+
+Make a folder and run the following code to clone the official repo:
 ``` bash
 git clone https://github.com/bigbluebutton/bigbluebutton.git
 ```
+Install dependencies:
+``` bash
+sudo apt-get install git-core ant ant-contrib openjdk-8-jdk-headless
+```
+Add JAVA_HOME to environment variables:
+``` bash
+vi ~/.profile
+```
+Append the following code to `~/.profile`
+``` bash
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+```
+Then, update environment variables:
+```
+source ~/.profile
+```
+Install more sdk tools:
+``` bash
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-After that, follow the steps on https://docs.bigbluebutton.org/2.2/dev.html. Then the development environment is set up.
+sdk install gradle 5.5.1
+sdk install grails 3.3.9
+sdk install sbt 1.2.8
+sdk install maven 3.5.0
+```
+
+#### change nginx configurations
+
+*In the following instructions, replace the following path with the path you clone the official repo.*
+``` bash
+/home/ubuntu/dev/bigbluebutton
+```
+
+First, check the nginx configuration.
+``` bash
+cd /etc/bigbluebutton/nginx/
+ls -lt
+```
+You should see that `web.nginx -> /etc/bigbluebutton/nginx/web`, `client.nginx -> /etc/bigbluebutton/nginx/client`. Run the following code:
+``` bash
+sudo cp web web_dev
+sudo cp client client_dev
+sudo rm web.nginx client.nginx
+sudo ln -s web_dev web.nginx
+sudo ln -s client_dev client.nginx
+```
+
+Modify client_dev by replacing every `/var/www/bigbluebutton` with `/home/ubuntu/dev/bigbluebutton`.
+
+#### HTML5 development environment
+
+Since we focus on developing the front end, we only need to focus on developing html5 features.
+
+Install meteor.js
+``` bash
+cd ~/dev/bigbluebutton/bigbluebutton-html5
+curl https://install.meteor.com/ | sh
+meteor update --allow-superuser --release 1.8
+```
+
+There is one change required to settings.yml to get webcam and screenshare working in the client (assuming you’re using HTTPS already). The first step is to find the value for `kurento.wsUrl` packaged `settings.yml`.
+
+``` bash
+grep "wsUrl" /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+```
+
+Next, edit the development `settings.yml` and change wsUrl to match what was retrieved before.
+
+``` bash
+vi private/config/settings.yml
+```
+
+You’re now ready to run the HTML5 code. First shut down the packaged version of the HTML5 client so you are not running two copies in parallel.
+
+``` bash
+sudo systemctl stop bbb-html5
+```
+
+Install the npm dependencies.
+
+``` bash
+meteor npm install
+```
+
+Finally, run the HTML5 code.
+
+``` bash
+npm start
+```
+
+Then the development environment is set up.
 
 ## install docker version
 
@@ -49,7 +145,7 @@ For Docker Desktop systems, one must go into Docker Preference -> Resources and 
 
 ### Pull image from online repository
 
-~~~shell
+~~~shellmeteor update --allow-superuser --release 1.8
 $ docker login
 $ docker pull <image_name>
 ~~~
@@ -71,7 +167,7 @@ to get the container's id, and use
 ~~~shell
 $ docker exec <container_id> ./bbb-start.sh
 ~~~
-to start bbb. 
+to startmeteor update --allow-superuser --release 1.8 bbb. 
 
 
 ### Local registry
