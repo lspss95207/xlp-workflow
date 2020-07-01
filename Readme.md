@@ -102,7 +102,7 @@ Install meteor.js
 ``` bash
 cd ~/dev/bigbluebutton/bigbluebutton-html5
 curl https://install.meteor.com/ | sh
-meteor update --allow-superuser --release 1.8
+meteor update --allow-superuser --release 1.9
 ```
 
 There is one change required to settings.yml to get webcam and screenshare working in the client (assuming you’re using HTTPS already). The first step is to find the value for `kurento.wsUrl` packaged `settings.yml`.
