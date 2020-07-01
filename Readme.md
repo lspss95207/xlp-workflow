@@ -137,6 +137,17 @@ npm start
 
 Then the development environment is set up.
 
+### Pull collaborative repo
+
+Since the official repo is too large, and we only need to develop client in bigbluebutton-html5 folder, I set up a subset (bigbluebutton-html5 folder) of the origin repo at https://github.com/KiaLAN/bbb-html5-client, which contains the modification we've made.
+
+``` bash
+cd /home/ubuntu/dev/bigbluebutton/bigbluebutton-html5
+git init
+git remote add origin git@github.com:KiaLAN/bbb-html5-client.git
+git pull origin master
+```
+
 ## install docker version
 
 Before using any of the instructions, one should check Docker Preference settings.
