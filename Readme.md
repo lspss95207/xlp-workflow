@@ -158,16 +158,15 @@ For Docker Desktop systems, one must go into Docker Preference -> Resources and 
 
 ~~~shellmeteor update --allow-superuser --release 1.8
 $ docker login
-$ docker pull <image_name>
+$ docker pull bigbluebutton/bigbluebutton:latest
 ~~~
-where <image_name> refers to __docker pull bigbluebutton/bigbluebutton:latest__ from  
-https://hub.docker.com/r/bigbluebutton/bigbluebutton
+from https://hub.docker.com/r/bigbluebutton/bigbluebutton
 
 
 
 ### Start bbb after having the image
 ~~~shell
-$docker run --rm -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp bigbluebutton -h <HOST_IP>
+$docker run --rm -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp <IMAGE_ID> -h <HOST_IP>
 ~~~
 Now the docker container is built and we can login locally in 127.0.0.1:80. To configure bbb in the docker, use
 ~~~shell
@@ -180,7 +179,6 @@ $ docker exec <container_id> -it /bin/bash
 to attach into the docker.
 
 
-(to startmeteor update --allow-superuser --release 1.8 bbb.)
 
 
 ### Local registry
