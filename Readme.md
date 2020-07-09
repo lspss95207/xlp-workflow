@@ -174,7 +174,7 @@ $ docker ps
 ~~~
 to get the container's id, and use
 ~~~shell
-$ docker exec <container_id> -it /bin/bash 
+$ docker exec -it <container_id> /bin/bash 
 ~~~
 to attach into the docker.
 
