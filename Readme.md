@@ -98,6 +98,13 @@ Modify client_dev by replacing every `/var/www/bigbluebutton` with `/home/ubuntu
 
 Since we focus on developing the front end, we only need to focus on developing html5 features.
 
+Replace the offical html5 client with our version
+```bash
+cd ~/dev/bigbluebutton
+rm -rf bigbluebutton-html5
+ln -s the-path-you-clone-our-repo/bigbluebutton-html5 bigbluebutton-html5
+```
+
 Install meteor.js
 ``` bash
 cd ~/dev/bigbluebutton/bigbluebutton-html5
@@ -136,17 +143,6 @@ npm start
 ```
 
 Then the development environment is set up.
-
-### Pull collaborative repo
-
-Since the official repo is too large, and we only need to develop client in bigbluebutton-html5 folder, I set up a subset (bigbluebutton-html5 folder) of the origin repo at https://github.com/KiaLAN/bbb-html5-client, which contains the modification we've made.
-
-``` bash
-cd /home/ubuntu/dev/bigbluebutton/bigbluebutton-html5
-git init
-git remote add origin git@github.com:KiaLAN/bbb-html5-client.git
-git pull origin master
-```
 
 ## install docker version
 
