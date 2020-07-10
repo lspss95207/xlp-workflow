@@ -8,3 +8,4 @@ tests/webdriverio/.testing-env
 .meteor/local
 
 trash/
+private/config/settings.yml
