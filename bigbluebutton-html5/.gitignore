@@ -1,5 +1,6 @@
 .dbshell
 npm-debug.log
+bigbluebutton-html5/private/config/settings.yml
 node_modules/
 .meteor/dev_bundle
 tests/webdriverio/.testing-env

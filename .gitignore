@@ -1,3 +1,5 @@
 #Ignore Mac OS default file .DS_Store
 .DS_Store
 volume
+
+bigbluebutton-html5/private/config/settings.yml
