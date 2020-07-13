@@ -10,10 +10,8 @@ import DropdownListItem from '/imports/ui/components/dropdown/list/item/componen
 
 import Message from '../message/component';
 
-// import logger from '/imports/startup/client/logger';
-// import {
-//   List, AutoSizer, CellMeasurer, CellMeasurerCache,
-// } from 'react-virtualized';
+import logger from '/imports/startup/client/logger';
+import emitter from '/imports/ui/components/tag/events'
 
 const intlMessages = defineMessages({
   save: {
@@ -72,17 +70,28 @@ class MessageWithDropdown extends PureComponent {
 
     return _.compact([
       <DropdownListItem
-        data-test="chatSave"
+        data-test="chatSave" // reply
         icon={saveIcon}
         label={intl.formatMessage(intlMessages.save)}
         key={this.actionsKey[0]}
-        onClick={() => { }}
+        onClick={() => {
+          const { messageId, rowIndex, text } = this.props;
+          const tagId = ['msg', messageId, rowIndex];
+          const tagLabel = text.slice(0, 10);
+          const tagDescription = 'Reply to the ' + String(rowIndex) + '\'th message of ' + messageId + '.';
+          logger.info(tagDescription);
+          emitter.emit('insertTag', { id: tagId, label: tagLabel, description: tagDescription });
+        }}
       />,
       <DropdownListItem
-        data-test="chatCopy"
+        data-test="chatCopy" // add subtopic
         icon={copyIcon}
         label={intl.formatMessage(intlMessages.copy)}
         key={this.actionsKey[1]}
+        onClick={() => {
+          logger.info('Add subtopic to ' + String(this.props));
+          // kialan: todo: emit an event to add subtopic tag
+        }}
       />,
     ]);
   }

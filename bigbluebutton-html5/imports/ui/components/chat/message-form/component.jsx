@@ -8,6 +8,8 @@ import _ from 'lodash';
 import TypingIndicatorContainer from './typing-indicator/container';
 import { styles } from './styles.scss';
 import Button from '../../button/component';
+import emitter from '/imports/ui/components/tag/events';
+import Tag from '/imports/ui/components/tag/component';
 
 const propTypes = {
   intl: intlShape.isRequired,
@@ -78,6 +80,7 @@ class MessageForm extends PureComponent {
       message: '',
       error: null,
       hasErrors: false,
+      tags: [] // added by kialan
     };
 
     this.BROWSER_RESULTS = browser();
@@ -97,6 +100,20 @@ class MessageForm extends PureComponent {
     if (!mobile) {
       if (this.textarea) this.textarea.focus();
     }
+
+    this.insertTagListener = emitter.addListener('insertTag', (tag) => {
+      const { id, label, description } = tag;
+      this.setState(
+        (state) => {
+          let tags = state.tags;
+          if (-1 == tags.findIndex(x => (id == x.id))) {
+            tags.push(tag);
+          }
+          return { tags };
+        }
+      );
+    });
+
   }
 
   componentDidUpdate(prevProps) {
@@ -137,6 +154,8 @@ class MessageForm extends PureComponent {
     const { message } = this.state;
     this.updateUnsentMessagesCollection(chatId, message);
     this.setMessageState();
+
+    emitter.removeListener(this.insertTagListener);
   }
 
   setMessageHint() {
@@ -250,11 +269,15 @@ class MessageForm extends PureComponent {
     div.appendChild(document.createTextNode(msg));
     msg = div.innerHTML;
 
+    // kialan: for debugging
+    msg = msg + (this.state.tags.length != 0 ?'#' + (this.state.tags.map(x => x.label)).join(', '):'');
+
     return (
       handleSendMessage(msg),
       this.setState({
         message: '',
         hasErrors: false,
+        tags: []
       }, stopUserTyping)
     );
   }
@@ -278,6 +301,7 @@ class MessageForm extends PureComponent {
         onSubmit={this.handleSubmit}
       >
         <div className={styles.wrapper}>
+          {this.state.tags.map(x => <Tag {...x} />)} {/* kialan: todo: place tags in TextareaAutosize */}
           <TextareaAutosize
             className={styles.input}
             id="message-input"
@@ -305,7 +329,7 @@ class MessageForm extends PureComponent {
             label={intl.formatMessage(messages.submitLabel)}
             color="primary"
             icon="send"
-            onClick={() => {}}
+            onClick={() => { }}
             data-test="sendMessageButton"
           />
         </div>

@@ -149,7 +149,7 @@ class MessageListItem extends Component {
               </time>
             </div>
             <div className={styles.messages} data-test="chatUserMessage">
-              {chats.map(message => (
+              {chats.map((message, rowIndex) => (
                 <MessageWithDropdown
                   className={(regEx.test(message.text) ? styles.hyperlink : styles.message)}
                   key={message.id}
@@ -159,18 +159,9 @@ class MessageListItem extends Component {
                   lastReadMessageTime={lastReadMessageTime}
                   handleReadMessage={handleReadMessage}
                   scrollArea={scrollArea}
+                  messageId={this.props.messageId} // pass messageId
+                  rowIndex={rowIndex} // pass rowIndex
                 />
-
-                // <MessageWithContextMenu
-                //   className={(regEx.test(message.text) ? styles.hyperlink : styles.message)}
-                //   key={message.id}
-                //   text={message.text}
-                //   time={message.time}
-                //   chatAreaId={chatAreaId}
-                //   lastReadMessageTime={lastReadMessageTime}
-                //   handleReadMessage={handleReadMessage}
-                //   scrollArea={scrollArea}
-                // />
 
                 // <Message
                 //   className={(regEx.test(message.text) ? styles.hyperlink : styles.message)}
