@@ -120,7 +120,7 @@ sed -i "s/bbbWebHost[ ]*=[ ]*\"[^\"]*\"/bbbWebHost=\"$HOST\"/g" \
   /usr/share/bbb-apps-akka/conf/application.conf
 sed -i "s/deskshareip[ ]*=[ ]*\"[^\"]*\"/deskshareip=\"$HOST\"/g" \
   /usr/share/bbb-apps-akka/conf/application.conf
-sed -i  "s/defaultPresentationURL[ ]*=[ ]*\"[^\"]*\"/defaultPresentationURL=\"${PROTㄋOCOL_HTTP}:\/\/$HOST\/default.pdf\"/g" \
+sed -i  "s/defaultPresentationURL[ ]*=[ ]*\"[^\"]*\"/defaultPresentationURL=\"${PROTOCOL_HTTP}:\/\/$HOST\/default.pdf\"/g" \
   /usr/share/bbb-apps-akka/conf/application.conf
 
 cat > /etc/kurento/modules/kurento/WebRtcEndpoint.conf.ini  << HERE
