@@ -46,6 +46,14 @@
   }
 }
 
+.messageSection{
+  padding-bottom: 0px;
+}
+
+.messageList section:last-child{
+  padding-bottom: 60px;
+}
+
 .unreadButton {
   flex-shrink: 0;
   width: 100%;
