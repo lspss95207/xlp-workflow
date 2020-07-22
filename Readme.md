@@ -154,15 +154,13 @@ For Docker Desktop systems, one must go into Docker Preference -> Resources and 
 
 ~~~shellmeteor update --allow-superuser --release 1.8
 $ docker login
-$ docker pull bigbluebutton/bigbluebutton:latest
+$ docker pull lspss95207/bigbluebutton-raw-ubuntu:2.2.20
 ~~~
-from https://hub.docker.com/r/bigbluebutton/bigbluebutton
-
 
 
 ### Start bbb after having the image
 ~~~shell
-$docker run --rm -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp <IMAGE_ID> -h <HOST_IP>
+$docker run -it --privileged=true -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp -d <IMAGE_ID> /sbin/init
 ~~~
 Now the docker container is built and we can login locally in 127.0.0.1:80. To configure bbb in the docker, use
 ~~~shell
@@ -174,6 +172,18 @@ $ docker exec -it <container_id> /bin/bash
 ~~~
 to attach into the docker.
 
+As a root user , first
+~~~shell
+$ bbb-conf --setip 127.0.0.1 #can try other ip
+$ bbb-conf --start
+$ bbb-conf --check
+~~~
+Then, go to our dev file and start npm
+~~~shell 
+$ cd /home//home/dev/xlp-workflow/bigbluebutton-html5
+$ npm start
+~~~
+You can login in at 127.0.0.1:80
 
 
 
