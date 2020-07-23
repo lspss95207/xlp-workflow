@@ -180,7 +180,6 @@ to attach into the docker.
 
 
 
-/home/$USER/dev/xlp-workflow/
 As a root user , first
 ~~~shell
 $ bbb-conf --setip 127.0.0.1 #can try other ip
