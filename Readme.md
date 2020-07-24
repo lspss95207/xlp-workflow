@@ -160,7 +160,8 @@ $ docker pull lspss95207/bigbluebutton-raw-ubuntu:2.2.20
 
 ### Start bbb after having the image
 ~~~shell
-$docker run -it --privileged=true -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp -d <IMAGE_ID> /sbin/init
+$docker run -it --privileged=true -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp -d \
+-v absolute-path-to-project/xlp-workflow/dev/bigbluebutton-html5:/home/dev/xlp-workflow/bigbluebutton-html5 <IMAGE_ID> /sbin/init
 ~~~
 Now the docker container is built and we can login locally in 127.0.0.1:80. To configure bbb in the docker, use
 ~~~shell
