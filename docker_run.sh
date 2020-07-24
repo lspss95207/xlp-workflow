@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-echo $USER
 
+var=$(pwd)
 BASH_OPTION=bash
 
 docker run -it \
@@ -9,7 +9,7 @@ docker run -it \
        	-p 1935:1935 \
 	-p 3478:3478 \
 	-p 3478:3478/udp \
-	-v /home/$USER/dev/xlp-workflow/:/home/dev/xlp-workflow/ \
+	-v $var:/home/dev/xlp-workflow/ \
 	--privileged \
 	--rm \
 	lspss95207/bigbluebutton-raw-ubuntu:2.2.20 \
