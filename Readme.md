@@ -176,6 +176,10 @@ To configure bbb in the docker, use
 ~~~shell
 $ source ./docker_join.sh
 ~~~
+or get container_id by __$ docker ps__  and 
+~~~shell 
+docker exec -it __container_id__ /bin/bash 
+~~~
 to attach into the docker.
 
 
