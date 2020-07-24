@@ -2,7 +2,7 @@
 
 
 var=$(pwd)
-BASH_OPTION=bash
+#BASH_OPTION=bash
 
 docker run -it -d\
 	-p 80:80/tcp \
@@ -14,4 +14,4 @@ docker run -it -d\
 	--rm \
 	lspss95207/bigbluebutton-raw-ubuntu:2.2.20 \
 	/sbin/init
-	$BASH_OPTION
+	#$BASH_OPTION
