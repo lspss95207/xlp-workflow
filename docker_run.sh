@@ -6,7 +6,7 @@ var=$(pwd)
 
 docker run -it -d\
 	-p 80:80/tcp \
-       	-p 1935:1935 \
+    -p 1935:1935 \
 	-p 3478:3478 \
 	-p 3478:3478/udp \
 	-v $var:/home/dev/xlp-workflow/ \
