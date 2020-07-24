@@ -46,7 +46,7 @@ RUN sudo add-apt-repository ppa:rmescandon/yq -y
 RUN sudo add-apt-repository ppa:libreoffice/ppa
 
 RUN apt-get update
-RUN apt-get dist-upgrade
+RUN apt-get dist-upgrade -y
 
 
 RUN apt-get install -y bigbluebutton 

@@ -159,19 +159,26 @@ $ docker pull lspss95207/bigbluebutton-raw-ubuntu:2.2.20
 
 
 ### Start bbb after having the image
+Clone our repo into ~/dev/
 ~~~shell
-$docker run -it --privileged=true -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp -d \
--v absolute-path-to-project/xlp-workflow/dev/bigbluebutton-html5:/home/dev/xlp-workflow/bigbluebutton-html5 <IMAGE_ID> /sbin/init
+$ mkdir -p ~/dev && cd ~/dev
+$ git clone https://github.com/KevinTung/xlp-workflow.git
+$ cd xlp-workflow
 ~~~
-Now the docker container is built and we can login locally in 127.0.0.1:80. To configure bbb in the docker, use
+Run docker_run.sh
 ~~~shell
-$ docker ps
+$ source ./docker_run.sh
 ~~~
-to get the container's id, and use
+
+Now the docker container is built and `bigbluebutton-html5` in our repo is linked into docker container. We can login bbb locally in 127.0.0.1:80. 
+
+To configure bbb in the docker, use
 ~~~shell
-$ docker exec -it <container_id> /bin/bash 
+$ source ./docker_join.sh
 ~~~
 to attach into the docker.
+
+
 
 As a root user , first
 ~~~shell
@@ -181,7 +188,8 @@ $ bbb-conf --check
 ~~~
 Then, go to our dev file and start npm
 ~~~shell 
-$ cd /home//home/dev/xlp-workflow/bigbluebutton-html5
+$ cd /home/dev/xlp-workflow/bigbluebutton-html5
+$ export METEOR_ALLOW_SUPERUSER=true
 $ npm start
 ~~~
 You can login in at 127.0.0.1:80
