@@ -176,9 +176,9 @@ To configure bbb in the docker, use
 ~~~shell
 $ source ./docker_join.sh
 ~~~
-or get container_id by __$ docker ps__  and 
+or get <container_id> by __$ docker ps__  and 
 ~~~shell 
-docker exec -it __container_id__ /bin/bash 
+docker exec -it <container_id> /bin/bash 
 ~~~
 to attach into the docker.
 
@@ -189,11 +189,13 @@ As a root user , first
 $ bbb-conf --setip 127.0.0.1 #can try other ip
 $ bbb-conf --start
 $ bbb-conf --check
+$ systemctl stop bbb-html5
 ~~~
 Then, go to our dev file and start npm
 ~~~shell 
 $ cd /home/dev/xlp-workflow/bigbluebutton-html5
 $ export METEOR_ALLOW_SUPERUSER=true
+$ meteor npm install
 $ npm start
 ~~~
 You can login in at 127.0.0.1:80
