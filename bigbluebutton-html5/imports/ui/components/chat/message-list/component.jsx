@@ -137,7 +137,7 @@ class MessageList extends Component {
     }
 
     if (prevMessages.length < messages.length) {
-      // this.resizeRow(prevMessages.length - 1);
+      this.resizeRow(prevMessages.length - 1);
       // messages.forEach((i, idx) => this.resizeRow(idx));
     }
   }
@@ -217,7 +217,7 @@ class MessageList extends Component {
 
     // it's to get an accurate size of the welcome message because it changes after initial render
 
-
+    
     if (message.sender === null && !this.systemMessagesResized[index]) {
       setTimeout(() => this.resizeRow(index), 500);
       this.systemMessagesResized[index] = true;
