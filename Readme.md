@@ -134,6 +134,7 @@ Install the npm dependencies.
 
 ``` bash
 meteor npm install
+npm install gojs gojs-react
 ```
 
 Finally, run the HTML5 code.
@@ -196,6 +197,7 @@ Then, go to our dev file and start npm
 $ cd /home/dev/xlp-workflow/bigbluebutton-html5
 $ export METEOR_ALLOW_SUPERUSER=true
 $ meteor npm install
+$ npm install gojs gojs-react
 $ npm start
 ~~~
 You can login in at 127.0.0.1:80
