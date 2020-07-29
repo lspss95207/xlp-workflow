@@ -17,6 +17,13 @@ import ExternalVideoContainer from '../external-video-player/container';
 import Storage from '../../services/storage/session';
 import { withDraggableConsumer } from './webcam-draggable-overlay/context';
 
+
+import * as go from 'gojs';
+import { ReactDiagram } from 'gojs-react';
+import { DiagramWrapperContainer } from '../diagram/container';
+import { DiagramWrapper } from '../diagram/component';
+
+
 const LAYOUT_CONFIG = Meteor.settings.public.layout;
 const KURENTO_CONFIG = Meteor.settings.public.kurento;
 
@@ -148,6 +155,14 @@ export default withDraggableConsumer(withModalMounter(withTracker(() => {
       />
     );
   }
+
+  //--------gojs test---------
+
+  data.children = <DiagramWrapper />;
+
+  // data.children = <DiagramWrapperContainer />;
+
+  //--------------------------
 
   data.webcamPlacement = Storage.getItem('webcamPlacement');
 
