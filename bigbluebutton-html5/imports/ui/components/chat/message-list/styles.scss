@@ -46,6 +46,15 @@
   }
 }
 
+.messageSection{
+  padding-bottom: 0px;
+}
+
+// change padding-bottom when adding new dropdown item
+.messageList section:last-child{
+  padding-bottom: 6rem;
+}
+
 .unreadButton {
   flex-shrink: 0;
   width: 100%;

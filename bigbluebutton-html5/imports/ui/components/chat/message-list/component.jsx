@@ -137,7 +137,7 @@ class MessageList extends Component {
     }
 
     if (prevMessages.length < messages.length) {
-      // this.resizeRow(prevMessages.length - 1);
+      this.resizeRow(prevMessages.length - 1);
       // messages.forEach((i, idx) => this.resizeRow(idx));
     }
   }
@@ -217,15 +217,7 @@ class MessageList extends Component {
 
     // it's to get an accurate size of the welcome message because it changes after initial render
 
-    const styleVar = Object.assign({}, style);
-
-    if (index == messages.length - 1) {
-      styleVar['padding-bottom'] = '40px';
-      this.beingLast = true;
-    } else {
-      styleVar['padding-bottom'] = '0px';
-    }
-
+    
     if (message.sender === null && !this.systemMessagesResized[index]) {
       setTimeout(() => this.resizeRow(index), 500);
       this.systemMessagesResized[index] = true;
@@ -239,8 +231,9 @@ class MessageList extends Component {
         parent={parent}
         rowIndex={index}
       >
-        <span
-          style={styleVar}
+        <section
+          className="messageSection"
+          style={style}
           key={key}
         >
           <MessageListItemContainer
@@ -253,7 +246,7 @@ class MessageList extends Component {
             lastReadMessageTime={lastReadMessageTime}
             scrollArea={scrollArea}
           />
-        </span>
+        </section>
       </CellMeasurer>
     );
   }

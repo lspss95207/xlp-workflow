@@ -134,6 +134,7 @@ Install the npm dependencies.
 
 ``` bash
 meteor npm install
+npm install gojs gojs-react
 ```
 
 Finally, run the HTML5 code.
@@ -154,26 +155,52 @@ For Docker Desktop systems, one must go into Docker Preference -> Resources and 
 
 ~~~shellmeteor update --allow-superuser --release 1.8
 $ docker login
-$ docker pull bigbluebutton/bigbluebutton:latest
+$ docker pull lspss95207/bigbluebutton-raw-ubuntu:2.2.20
 ~~~
-from https://hub.docker.com/r/bigbluebutton/bigbluebutton
-
 
 
 ### Start bbb after having the image
+Clone our repo into ~/dev/
 ~~~shell
-$docker run --rm -p 80:80/tcp -p 1935:1935 -p 3478:3478 -p 3478:3478/udp <IMAGE_ID> -h <HOST_IP>
+$ mkdir -p ~/dev && cd ~/dev
+$ git clone https://github.com/KevinTung/xlp-workflow.git
+$ cd xlp-workflow
 ~~~
-Now the docker container is built and we can login locally in 127.0.0.1:80. To configure bbb in the docker, use
+Run docker_run.sh
 ~~~shell
-$ docker ps
+$ source ./docker_run.sh
 ~~~
-to get the container's id, and use
+
+Now the docker container is built and `bigbluebutton-html5` in our repo is linked into docker container. We can login bbb locally in 127.0.0.1:80. 
+
+To configure bbb in the docker, use
 ~~~shell
-$ docker exec -it <container_id> /bin/bash 
+$ source ./docker_join.sh
+~~~
+or get <container_id> by __$ docker ps__  and 
+~~~shell 
+docker exec -it <container_id> /bin/bash 
 ~~~
 to attach into the docker.
 
+
+
+As a root user , first
+~~~shell
+$ bbb-conf --setip 127.0.0.1 #can try other ip
+$ bbb-conf --start
+$ bbb-conf --check
+$ systemctl stop bbb-html5
+~~~
+Then, go to our dev file and start npm
+~~~shell 
+$ cd /home/dev/xlp-workflow/bigbluebutton-html5
+$ export METEOR_ALLOW_SUPERUSER=true
+$ meteor npm install
+$ npm install gojs gojs-react
+$ npm start
+~~~
+You can login in at 127.0.0.1:80
 
 
 

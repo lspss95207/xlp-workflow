@@ -1,0 +1,13 @@
+.diagramComponent {
+    border: solid 1px black;
+    background-color: white;
+    order: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
