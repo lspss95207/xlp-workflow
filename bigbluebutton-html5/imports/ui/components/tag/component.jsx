@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import { defineMessages, injectIntl, intlShape } from 'react-intl';
-import cx from 'classnames';
+import { styles } from './styles.scss';
+import emitter from '/imports/ui/components/tag/events';;
 
 class Tag extends PureComponent {
   constructor(props) {
@@ -16,12 +16,26 @@ class Tag extends PureComponent {
     };
   }
 
-  // kialan: todo: apply css
   render() {
+    const {
+      removable,
+    } = this.props;
     return (
-      <div classname={this.state.id}>
+      <span className={styles.inlineTag}>
         {this.state.label}
-      </div>
+        {removable ?
+          (<button
+            className={styles.tagRemoveButton}
+            onClick={(e) => {
+              e.preventDefault();
+              emitter.emit('removeTag', this.props);
+            }}
+          >
+            {"\u00d7"}
+          </button>)
+          : null
+        }
+      </span >
     );
   }
 }

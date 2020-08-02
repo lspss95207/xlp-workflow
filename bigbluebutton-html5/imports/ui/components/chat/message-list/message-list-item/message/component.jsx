@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import fastdom from 'fastdom';
+import Tag from '/imports/ui/components/tag/component';
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -151,13 +152,22 @@ export default class MessageListItem extends PureComponent {
       className,
     } = this.props;
 
+    // todo: store tags separately
+    let msg = text.split('\ufeff');
+    let tags = msg.slice(1);
+    tags = tags.map(x => { return { id: x, label: x, description: x }; });
+    msg = msg[0];
+
     return (
-      <p
-        ref={(ref) => { this.text = ref; }}
-        dangerouslySetInnerHTML={{ __html: text }}
-        className={className}
-        data-test="chatMessageText"
-      />
+      <span>
+        <p
+          ref={(ref) => { this.text = ref; }}
+          dangerouslySetInnerHTML={{ __html: msg }}
+          className={className}
+          data-test="chatMessageText"
+        />
+        {tags.length > 0 ? tags.map(x => <Tag {...x} removable={false} key={x.id} />) : null}
+      </span>
     );
   }
 }

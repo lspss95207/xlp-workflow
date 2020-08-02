@@ -11,6 +11,9 @@ import Button from '../../button/component';
 import emitter from '/imports/ui/components/tag/events';
 import Tag from '/imports/ui/components/tag/component';
 
+import logger from '/imports/startup/client/logger';
+
+
 const propTypes = {
   intl: intlShape.isRequired,
   chatId: PropTypes.string.isRequired,
@@ -101,19 +104,37 @@ class MessageForm extends PureComponent {
       if (this.textarea) this.textarea.focus();
     }
 
-    this.insertTagListener = emitter.addListener('insertTag', (tag) => {
+    this.insertTagListener = emitter.on('insertTag', (tag) => {
       const { id, label, description } = tag;
       this.setState(
         (state) => {
-          let tags = state.tags;
+          let tags = state.tags.slice(); // copy
           if (-1 == tags.findIndex(x => (id == x.id))) {
             tags.push(tag);
+            return { tags };
+          } else {
+            return {};
           }
-          return { tags };
         }
       );
     });
 
+    this.removeTagListener = emitter.on('removeTag', (tag) => {
+      const { id } = tag;
+      this.setState(
+        (state) => {
+          let tags = this.state.tags.slice();
+          let index = tags.findIndex(x => (id == x.id));
+          if (-1 !== index) {
+            tags.splice(index, 1);
+            return { tags };
+          }
+          else {
+            return {};
+          }
+        }
+      );
+    })
   }
 
   componentDidUpdate(prevProps) {
@@ -154,8 +175,6 @@ class MessageForm extends PureComponent {
     const { message } = this.state;
     this.updateUnsentMessagesCollection(chatId, message);
     this.setMessageState();
-
-    emitter.removeListener(this.insertTagListener);
   }
 
   setMessageHint() {
@@ -270,7 +289,10 @@ class MessageForm extends PureComponent {
     msg = div.innerHTML;
 
     // kialan: for debugging
-    msg = msg + (this.state.tags.length != 0 ?'#' + (this.state.tags.map(x => x.label)).join(', '):'');
+    let tags = this.state.tags;
+    // msg = msg + (tags.length > 0 ? '\ufeff' + (tags.map(x => [x.id, x.label, x.description].join('\ufefe'))).join('\ufeff') : '');
+    msg = msg + (tags.length !== 0 ? '\ufeff' + (tags.map(x => x.label)).join('\ufeff') : '');
+    // msg = {msg, tags};
 
     return (
       handleSendMessage(msg),
@@ -301,7 +323,6 @@ class MessageForm extends PureComponent {
         onSubmit={this.handleSubmit}
       >
         <div className={styles.wrapper}>
-          {this.state.tags.map(x => <Tag {...x} />)} {/* kialan: todo: place tags in TextareaAutosize */}
           <TextareaAutosize
             className={styles.input}
             id="message-input"
@@ -334,6 +355,9 @@ class MessageForm extends PureComponent {
           />
         </div>
         <TypingIndicatorContainer {...{ error }} />
+        <div>
+          {this.state.tags.map(x => <Tag {...x} removable={true} key={x.id} />)}
+        </div>
       </form>
     ) : null;
   }

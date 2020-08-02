@@ -76,8 +76,8 @@ class MessageWithDropdown extends PureComponent {
         key={this.actionsKey[0]}
         onClick={() => {
           const { messageId, rowIndex, text } = this.props;
-          const tagId = ['msg', messageId, rowIndex];
-          const tagLabel = text.slice(0, 10);
+          const tagId = 'msg#' + messageId + '#' + String(rowIndex);
+          const tagLabel = text.length > 13 ? text.slice(0, 10) + '...' : text;
           const tagDescription = 'Reply to the ' + String(rowIndex) + '\'th message of ' + messageId + '.';
           logger.info(tagDescription);
           emitter.emit('insertTag', { id: tagId, label: tagLabel, description: tagDescription });
@@ -90,7 +90,6 @@ class MessageWithDropdown extends PureComponent {
         key={this.actionsKey[1]}
         onClick={() => {
           logger.info('Add subtopic to ' + String(this.props));
-          // kialan: todo: emit an event to add subtopic tag
         }}
       />,
     ]);

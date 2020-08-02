@@ -1,0 +1,39 @@
+@import "/imports/ui/stylesheets/mixins/focus";
+@import "/imports/ui/stylesheets/variables/_all";
+
+.inlineTag {
+  background-color: greenyellow;
+  border: none;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 3px;
+  margin-right: 3px;
+}
+
+// .replyTag {
+//   background-color: rosybrown;
+//   border: none;
+//   border-radius: 3px;
+//   padding-left: 6px;
+//   padding-right: 3px;
+//   margin-right: 3px;
+// }
+
+// .replyTag::before {
+//   right: 100%;
+//   top:0px;
+//   width:0px;
+//   height:0px;
+//   border-top:20px solid transparent;
+//   border-right:40px solid rosybrown;
+//   border-bottom:20px solid transparent;
+// }
+
+.tagRemoveButton {
+  border: none;
+  background-color: transparent;
+}
+
+.tagRemoveButton:hover {
+  color: red;
+}

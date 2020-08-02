@@ -196,6 +196,7 @@ const sendGroupMessage = (message) => {
     }
   }
 
+  // here
   const payload = {
     color: '0',
     correlationId: `${senderUserId}-${Date.now()}`,
@@ -204,6 +205,7 @@ const sendGroupMessage = (message) => {
       name: senderName,
     },
     message,
+    // tags: [6666], // todo
   };
 
   const currentClosedChats = Storage.getItem(CLOSED_CHAT_LIST_KEY);
