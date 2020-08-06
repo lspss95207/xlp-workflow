@@ -135,6 +135,7 @@ Install the npm dependencies.
 ``` bash
 meteor npm install
 npm install gojs gojs-react
+npm install bpmn-js
 ```
 
 Finally, run the HTML5 code.
