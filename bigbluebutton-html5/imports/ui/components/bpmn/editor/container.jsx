@@ -4,15 +4,15 @@ import { withTracker } from 'meteor/react-meteor-data';
 import ErrorBoundary from '/imports/ui/components/error-boundary/component';
 import FallbackPresentation from '/imports/ui/components/fallback-errors/fallback-presentation/component';
 // import PresentationPodService from './service';
-import BpmnDiagram from './component';
+import BpmnDiagramEditor from './component';
 
 // PresentationPods component will be the place to go once we have the presentation pods designs
 // it should give each PresentationAreaContainer some space
 // which it will fill with the uploaded presentation
 
-export default BpmnDiagramContainer = ({ ...props }) => (
+export default BpmnDiagramViewerContainer = ({ ...props }) => (
   <ErrorBoundary Fallback={FallbackPresentation}>
-    <BpmnDiagram {...props} />
+    <BpmnDiagramEditor {...props} />
   </ErrorBoundary>
 );
 

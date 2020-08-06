@@ -5,7 +5,7 @@ import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import { styles } from './styles.scss';
 
 
-export default class BpmnDiagram extends React.Component {
+export default class BpmnDiagramViewer extends React.Component {
   constructor(props) {
     super(props);
 

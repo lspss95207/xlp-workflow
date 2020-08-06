@@ -23,8 +23,8 @@ import { withDraggableConsumer } from './webcam-draggable-overlay/context';
 import { DiagramWrapperContainer } from '../diagram/container';
 import { DiagramWrapper } from '../diagram/component';
 
-import BpmnDiagram from '../bpmn/component';
-import BpmnDiagramContainer from '../bpmn/container';
+import BpmnDiagramViewerContainer from '../bpmn/viewer/container';
+import BpmnDiagramEditorContainer from '../bpmn/editor/container';
 
 
 const LAYOUT_CONFIG = Meteor.settings.public.layout;
@@ -171,8 +171,7 @@ export default withDraggableConsumer(withModalMounter(withTracker(() => {
   // -------BPMN.io test-------
 
   data.children = (
-    <BpmnDiagramContainer
-      url="http://lspss95207.duckdns.org/bpmn.bpmn"
+    <BpmnDiagramEditorContainer
       onLoading={null}
       onShown={null}
       onError={null}
