@@ -10,6 +10,7 @@ import {
 import { styles } from './styles';
 import MessageListItemContainer from './message-list-item/container';
 
+
 const propTypes = {
   messages: PropTypes.arrayOf(PropTypes.object).isRequired,
   scrollPosition: PropTypes.number,

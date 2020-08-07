@@ -11,22 +11,8 @@ import DropdownListItem from '/imports/ui/components/dropdown/list/item/componen
 import Message from '../message/component';
 
 import logger from '/imports/startup/client/logger';
-import emitter from '/imports/ui/components/tag/events'
-
-const intlMessages = defineMessages({
-  save: {
-    id: 'app.chat.dropdown.save',
-    description: 'Clear button label',
-  },
-  copy: {
-    id: 'app.chat.dropdown.copy',
-    description: 'Copy button label',
-  },
-  options: {
-    id: 'app.chat.dropdown.options',
-    description: 'Chat Options',
-  },
-});
+import emitter from '/imports/ui/components/tag/events';
+import Tag from '/imports/ui/components/tag/component';
 
 class MessageWithDropdown extends PureComponent {
   constructor(props) {
@@ -70,26 +56,41 @@ class MessageWithDropdown extends PureComponent {
 
     return _.compact([
       <DropdownListItem
-        data-test="chatSave" // reply
-        icon={saveIcon}
-        label={intl.formatMessage(intlMessages.save)}
+        data-test='addReply'
+        label='回复'
         key={this.actionsKey[0]}
         onClick={() => {
-          const { messageId, rowIndex, text } = this.props;
-          const tagId = 'msg#' + messageId + '#' + String(rowIndex);
-          const tagLabel = text.length > 13 ? text.slice(0, 10) + '...' : text;
-          const tagDescription = 'Reply to the ' + String(rowIndex) + '\'th message of ' + messageId + '.';
-          logger.info(tagDescription);
-          emitter.emit('insertTag', { id: tagId, label: tagLabel, description: tagDescription });
+          const { messageId, rowIndex, text, tags } = this.props;
+          const id = 'msg#' + messageId + '#' + String(rowIndex);
+          const label = text.length > 13 ? text.slice(0, 10) + '...' : text;
+          const description = 'Reply';
+          const type = 'reply';
+          emitter.emit('insertTag', { id, label, description, type });
+          tags.map(x => {
+            const { type } = x;
+            if (type !== 'reply') {
+              emitter.emit('insertTag', x);
+            }
+          });
         }}
       />,
       <DropdownListItem
-        data-test="chatCopy" // add subtopic
-        icon={copyIcon}
-        label={intl.formatMessage(intlMessages.copy)}
+        data-test='addSubtopic'
+        label='添加子话题'
         key={this.actionsKey[1]}
         onClick={() => {
-          logger.info('Add subtopic to ' + String(this.props));
+          const { messageId, rowIndex, text, tags } = this.props;
+          const id = 'msg#' + messageId + '#' + String(rowIndex);
+          const label = text.length > 13 ? text.slice(0, 10) + '...' : text;
+          const description = 'Subtopic';
+          const type = 'topic';
+          emitter.emit('insertTag', { id, label, description, type });
+          tags.map(x => {
+            const { type } = x;
+            if (type !== 'reply') {
+              emitter.emit('insertTag', x);
+            }
+          });
         }}
       />,
     ]);
@@ -99,7 +100,7 @@ class MessageWithDropdown extends PureComponent {
     const { isMenuOpen } = this.state;
     const availableActions = this.getAvailableActions();
 
-    const messageProps = isMenuOpen ? { ...this.props, text: '@' + this.props.text } : this.props;
+    const messageProps = this.props;
 
     return (
       <Dropdown
@@ -108,8 +109,9 @@ class MessageWithDropdown extends PureComponent {
         onHide={this.onActionsHide}
       >
         <DropdownTrigger tabIndex={0}>
-          <div>
+          <div style={{ "border": isMenuOpen ? "1px solid pink" : "none" }} key={isMenuOpen}>
             <Message {...messageProps} />
+            {messageProps.tags.map((x) => (<Tag {...x} removable={false} key={x.id} />))}
           </div>
         </DropdownTrigger>
         <DropdownContent placement="bottom right">

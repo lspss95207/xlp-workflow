@@ -105,11 +105,11 @@ class MessageForm extends PureComponent {
     }
 
     this.insertTagListener = emitter.on('insertTag', (tag) => {
-      const { id, label, description } = tag;
+      const { id } = tag;
       this.setState(
         (state) => {
           let tags = state.tags.slice(); // copy
-          if (-1 == tags.findIndex(x => (id == x.id))) {
+          if (-1 === tags.findIndex(x => (id === x.id))) {
             tags.push(tag);
             return { tags };
           } else {
@@ -124,7 +124,7 @@ class MessageForm extends PureComponent {
       this.setState(
         (state) => {
           let tags = this.state.tags.slice();
-          let index = tags.findIndex(x => (id == x.id));
+          let index = tags.findIndex(x => (id === x.id));
           if (-1 !== index) {
             tags.splice(index, 1);
             return { tags };
@@ -167,6 +167,16 @@ class MessageForm extends PureComponent {
       || partnerIsLoggedOut !== prevProps.partnerIsLoggedOut
     ) {
       this.setMessageHint();
+    }
+
+    // hashtag
+    const hashtags = message.match(/(#[^#]+#)/g);
+    if (hashtags !== null) {
+      hashtags.map(x => {
+        // x = x.replace(/#/g, '');
+        emitter.emit('insertTag', { id: `${chatId}-${x}`, label: x, description: 'hashtag', type: 'hashtag' });
+      });
+      this.setState({ message: message.replace(/(#[^#]+#)/g, "") });
     }
   }
 
@@ -288,11 +298,9 @@ class MessageForm extends PureComponent {
     div.appendChild(document.createTextNode(msg));
     msg = div.innerHTML;
 
-    // kialan: for debugging
     let tags = this.state.tags;
-    // msg = msg + (tags.length > 0 ? '\ufeff' + (tags.map(x => [x.id, x.label, x.description].join('\ufefe'))).join('\ufeff') : '');
-    msg = msg + (tags.length !== 0 ? '\ufeff' + (tags.map(x => x.label)).join('\ufeff') : '');
-    // msg = {msg, tags};
+    msg = { msg, tags };
+    msg = JSON.stringify(msg);
 
     return (
       handleSendMessage(msg),

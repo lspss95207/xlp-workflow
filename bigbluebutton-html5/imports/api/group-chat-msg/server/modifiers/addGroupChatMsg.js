@@ -29,11 +29,15 @@ export default function addGroupChatMsg(meetingId, chatId, msg) {
     correlationId: Match.Maybe(String),
   });
 
+  msg.message = JSON.parse(msg.message);
+
   const msgDocument = {
     ...msg,
     meetingId,
     chatId,
-    message: parseMessage(msg.message),
+    // message: parseMessage(msg.message),
+    message: parseMessage(msg.message.msg),
+    tags: msg.message.tags,
     sender: msg.sender.id,
   };
 

@@ -1,3 +1,4 @@
+import logger from '/imports/startup/client/logger';
 import Users from '/imports/api/users';
 import Meetings from '/imports/api/meetings';
 import { GroupChatMsg } from '/imports/api/group-chat-msg';
@@ -77,6 +78,7 @@ const reduceGroupMessages = (previous, current) => {
   currentMessage.content = [{
     id: current.id,
     text: current.message,
+    tags: current.tags, // kialan: here
     time: current.timestamp,
   }];
   if (!lastMessage || !currentMessage.chatId === PUBLIC_GROUP_CHAT_ID) {
@@ -196,7 +198,6 @@ const sendGroupMessage = (message) => {
     }
   }
 
-  // here
   const payload = {
     color: '0',
     correlationId: `${senderUserId}-${Date.now()}`,
@@ -205,7 +206,6 @@ const sendGroupMessage = (message) => {
       name: senderName,
     },
     message,
-    // tags: [6666], // todo
   };
 
   const currentClosedChats = Storage.getItem(CLOSED_CHAT_LIST_KEY);

@@ -6,23 +6,19 @@ class Tag extends PureComponent {
   constructor(props) {
     super(props);
 
-    var { id, label, description } = props;
+    var { id, label, description, type } = props;
     if (!id) throw "Must give tag id!";
-    label = label || 'no label';
-    description = description || 'no description';
+    if (-1 === ['reply', 'topic', 'hashtag', null].findIndex(x => (x === type))) throw "Wrong tag type!";
 
-    this.state = {
-      id, label, description
-    };
   }
 
   render() {
     const {
-      removable,
+      id, label, description, removable, type
     } = this.props;
     return (
       <span className={styles.inlineTag}>
-        {this.state.label}
+        {label}
         {removable ?
           (<button
             className={styles.tagRemoveButton}

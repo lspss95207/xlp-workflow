@@ -38,9 +38,14 @@ export default function sendGroupChatMsg(chatId, message) {
 
   check(message, Object);
 
-  const parsedMessage = parseMessage(message.message);
+  // const parsedMessage = parseMessage(message.message);
 
-  message.message = parsedMessage;
+  // message.message = parsedMessage;
+
+  message.message = JSON.parse(message.message);
+  const parsedMessage = parseMessage(message.message.msg);
+  message.message.msg = parsedMessage;
+  message.message = JSON.stringify(message.message);
 
   const payload = {
     msg: message,

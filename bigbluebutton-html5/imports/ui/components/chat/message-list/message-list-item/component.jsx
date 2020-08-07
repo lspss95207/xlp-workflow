@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import logger from '/imports/startup/client/logger';
 import { FormattedTime, defineMessages, injectIntl } from 'react-intl';
 import _ from 'lodash';
 import Icon from '/imports/ui/components/icon/component';
 import UserAvatar from '/imports/ui/components/user-avatar/component';
 import Message from './message/component';
-import MessageWithDropdown from './message-with-dropdown/component'
+import MessageWithDropdown from './message-with-dropdown/component';
 
 import { styles } from './styles';
 
@@ -154,6 +155,7 @@ class MessageListItem extends Component {
                   className={(regEx.test(message.text) ? styles.hyperlink : styles.message)}
                   key={message.id}
                   text={message.text}
+                  tags={message.tags}
                   time={message.time}
                   chatAreaId={chatAreaId}
                   lastReadMessageTime={lastReadMessageTime}
