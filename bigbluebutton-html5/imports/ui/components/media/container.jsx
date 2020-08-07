@@ -8,6 +8,8 @@ import { notify } from '/imports/ui/services/notification';
 import VideoService from '/imports/ui/components/video-provider/service';
 import getFromUserSettings from '/imports/ui/services/users-settings';
 import { withModalMounter } from '/imports/ui/components/modal/service';
+import * as go from 'gojs';
+import { ReactDiagram } from 'gojs-react';
 import Media from './component';
 import MediaService, { getSwapLayout, shouldEnableSwapLayout } from './service';
 import PresentationPodsContainer from '../presentation-pod/container';
@@ -18,10 +20,11 @@ import Storage from '../../services/storage/session';
 import { withDraggableConsumer } from './webcam-draggable-overlay/context';
 
 
-import * as go from 'gojs';
-import { ReactDiagram } from 'gojs-react';
 import { DiagramWrapperContainer } from '../diagram/container';
 import { DiagramWrapper } from '../diagram/component';
+
+import BpmnDiagramViewerContainer from '../bpmn/viewer/container';
+import BpmnDiagramEditorContainer from '../bpmn/editor/container';
 
 
 const LAYOUT_CONFIG = Meteor.settings.public.layout;
@@ -156,9 +159,24 @@ export default withDraggableConsumer(withModalMounter(withTracker(() => {
     );
   }
 
-  //--------gojs test---------
+  // --------gojs test---------
 
-  data.children = <DiagramWrapper />;
+  // data.children = <DiagramWrapper />;
+
+  // data.children = <DiagramWrapperContainer />;
+
+  //--------------------------
+
+
+  // -------BPMN.io test-------
+
+  data.children = (
+    <BpmnDiagramEditorContainer
+      onLoading={null}
+      onShown={null}
+      onError={null}
+    />
+  );
 
   // data.children = <DiagramWrapperContainer />;
 
