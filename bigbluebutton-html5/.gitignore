@@ -9,3 +9,4 @@ tests/webdriverio/.testing-env
 
 trash/
 private/config/settings.yml
+.vscode
