@@ -27,6 +27,7 @@ class MessageWithDropdown extends PureComponent {
     this.actionsKey = [
       _.uniqueId('action-item-'),
       _.uniqueId('action-item-'),
+      _.uniqueId('action-item-'),
     ];
   }
 
@@ -93,6 +94,26 @@ class MessageWithDropdown extends PureComponent {
           });
         }}
       />,
+      <DropdownListItem
+      data-test='addMindmap'
+      label='添加至心智圖'
+      key={this.actionsKey[2]}
+      onClick={() => {
+        const { messageId, rowIndex, text, tags } = this.props;
+        // const id = 'msg#' + messageId + '#' + String(rowIndex);
+        // const label = text.length > 13 ? text.slice(0, 10) + '...' : text;
+        // const description = 'Subtopic';
+        // const type = 'topic';
+        // emitter.emit('insertTag', { id, label, description, type });
+        // tags.map(x => {
+        //   const { type } = x;
+        //   if (type !== 'reply') {~
+        //     emitter.emit('insertTag', x);
+        //   }
+        // });
+        emitter.emit('createShape',text);
+      }}
+    />,
     ]);
   }
 
