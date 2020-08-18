@@ -38,7 +38,7 @@ export default class BpmnDiagramEditor extends React.Component {
     //   }
     // });
 
-      this.bpmnModeler = new Modeler({container});
+    this.bpmnModeler = new Modeler({ container });
 
     this.bpmnModeler.on('import.done', (event) => {
       const {
@@ -117,7 +117,6 @@ export default class BpmnDiagramEditor extends React.Component {
 
 
   addListeners() {
-
     this.createShapeListener = emitter.on('createShape', (message) => {
       console.log(message);
       // const bpmnFactory = this.bpmnModeler.get('bpmnFactory'),
@@ -128,30 +127,33 @@ export default class BpmnDiagramEditor extends React.Component {
       // const serviceTask = elementFactory.createShape({ type: 'bpmn:ServiceTask' });
       // modeling.appendShape(serviceTask, { x: 400, y: 100 });
 
-      const modeler = this.bpmnModeler
+      const modeler = this.bpmnModeler;
       // (1) Get the modules
-      const bpmnFactory = modeler.get('bpmnFactory'),
-        elementFactory = modeler.get('elementFactory'),
-        elementRegistry = modeler.get('elementRegistry'),
-        modeling = modeler.get('modeling');
+      const bpmnFactory = modeler.get('bpmnFactory');
+
+
+      const elementFactory = modeler.get('elementFactory');
+
+
+      const elementRegistry = modeler.get('elementRegistry');
+
+
+      const modeling = modeler.get('modeling');
 
       // (2) Get the existing process and the start event
-      const process = elementRegistry.get('Process_1'),
-        startEvent = elementRegistry.get('StartEvent_1');
+      const process = elementRegistry.get('Process_1');
+
+
+      const startEvent = elementRegistry.get('StartEvent_1');
 
       // (3) Create a service task shape
-      const serviceTask = elementFactory.createShape({ type: 'bpmn:ServiceTask'});
+      const serviceTask = elementFactory.createShape({ type: 'bpmn:ServiceTask' });
       modeling.updateProperties(serviceTask, { name: message });
 
       // (4) Add the new service task shape to the diagram using `appendShape` to connect it to an existing
       // shape
       modeling.appendShape(startEvent, serviceTask, { x: 400, y: 100 }, process);
-
-
-    }
-    );
-
-
+    });
   }
 
 
