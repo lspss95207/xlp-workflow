@@ -2,12 +2,15 @@ import React from 'react';
 
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import Modeler from 'bpmn-js/lib/Modeler';
-// import ModelingDslModule from 'bpmn-js-cli-modeling-dsl';
+import propertiesPanelModule from 'bpmn-js-properties-panel';
+import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/bpmn';
+
 import emitter from '/imports/ui/components/tag/events';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 
 import { styles } from './styles.scss';
 
@@ -19,6 +22,7 @@ export default class BpmnDiagramEditor extends React.Component {
     this.state = {};
 
     this.containerRef = React.createRef();
+    this.panelRef = React.createRef();
   }
 
   componentDidMount() {
@@ -28,17 +32,18 @@ export default class BpmnDiagramEditor extends React.Component {
     } = this.props;
 
     const container = this.containerRef.current;
+    const panel = this.panelRef.current;
 
-    // this.bpmnModeler = new Modeler({
-    //   container, additionalModules: [
-    //     ModelingDslModule
-    //   ],
-    //   cli: {
-    //     bindTo: 'cli'
-    //   }
-    // });
-
-    this.bpmnModeler = new Modeler({ container });
+    this.bpmnModeler = new Modeler({
+      container,
+      propertiesPanel: {
+        parent: panel
+      },
+      additionalModules: [
+        propertiesPanelModule,
+        propertiesProviderModule
+      ],
+    });
 
     this.bpmnModeler.on('import.done', (event) => {
       const {
@@ -196,10 +201,18 @@ export default class BpmnDiagramEditor extends React.Component {
 
   render() {
     return (
-      <div
-        className={styles.bpmnComponent}
-        ref={this.containerRef}
-      />
+      <div className={styles.content+" "+styles.withDiagram}>
+        <div
+          className={styles.bpmnComponent}
+          ref={this.containerRef}
+        >
+        </div>
+        <div
+          className={styles.propertiesPanelParent}
+          ref={this.panelRef}
+        >
+        </div>
+      </div>
     );
   }
 }

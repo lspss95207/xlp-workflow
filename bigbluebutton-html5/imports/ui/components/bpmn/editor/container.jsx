@@ -11,9 +11,9 @@ import BpmnDiagramEditor from './component';
 // which it will fill with the uploaded presentation
 
 export default BpmnDiagramViewerContainer = ({ ...props }) => (
-  <ErrorBoundary Fallback={FallbackPresentation}>
-    <BpmnDiagramEditor {...props} />
-  </ErrorBoundary>
+  // <ErrorBoundary Fallback={FallbackPresentation}>
+  <BpmnDiagramEditor {...props} />
+  // </ErrorBoundary>
 );
 
 // const BpmnDiagramContainer = ({ DiagramWrapperPodIds, ...props }) => {
