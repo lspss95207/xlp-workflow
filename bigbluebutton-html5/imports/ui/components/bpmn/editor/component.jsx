@@ -3,7 +3,7 @@ import React from 'react';
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import Modeler from 'bpmn-js/lib/Modeler';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
-import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/bpmn';
+import propertiesProviderModule from './propities-provider';
 
 import emitter from '/imports/ui/components/tag/events';
 
@@ -79,7 +79,7 @@ export default class BpmnDiagramEditor extends React.Component {
     // `;
 
     const XML = `<?xml version="1.0" encoding="UTF-8"?>
-    <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"  id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
       <bpmn2:process id="Process_1" isExecutable="false">
         <bpmn2:startEvent id="StartEvent_1" name="StartEvent_1" />
       </bpmn2:process>
@@ -152,8 +152,10 @@ export default class BpmnDiagramEditor extends React.Component {
       const startEvent = elementRegistry.get('StartEvent_1');
 
       // (3) Create a service task shape
-      const serviceTask = elementFactory.createShape({ type: 'bpmn:ServiceTask' });
+      const serviceTask = elementFactory.createShape({ type: 'bpmn:Task' });
       modeling.updateProperties(serviceTask, { name: message });
+      serviceTask.tag="tag"
+      console.log(serviceTask)
 
       // (4) Add the new service task shape to the diagram using `appendShape` to connect it to an existing
       // shape
