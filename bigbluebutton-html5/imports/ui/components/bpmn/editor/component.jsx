@@ -1,11 +1,13 @@
 import React from 'react';
 
+import emitter from '/imports/ui/components/tag/events';
+
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import Modeler from 'bpmn-js/lib/Modeler';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './propities-provider';
+import bbbModdleDescriptor from '../descriptors/bbb'
 
-import emitter from '/imports/ui/components/tag/events';
 
 import 'bpmn-js/dist/assets/diagram-js.css';
 import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
@@ -43,6 +45,9 @@ export default class BpmnDiagramEditor extends React.Component {
         propertiesPanelModule,
         propertiesProviderModule
       ],
+      moddleExtensions: {
+        bbb: bbbModdleDescriptor
+      }
     });
 
     this.bpmnModeler.on('import.done', (event) => {
@@ -154,7 +159,6 @@ export default class BpmnDiagramEditor extends React.Component {
       // (3) Create a service task shape
       const serviceTask = elementFactory.createShape({ type: 'bpmn:Task' });
       modeling.updateProperties(serviceTask, { name: message });
-      serviceTask.tag="tag"
       console.log(serviceTask)
 
       // (4) Add the new service task shape to the diagram using `appendShape` to connect it to an existing

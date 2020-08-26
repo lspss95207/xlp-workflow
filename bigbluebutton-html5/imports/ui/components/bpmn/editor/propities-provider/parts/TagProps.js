@@ -16,13 +16,11 @@ module.exports = function(group, element, translate, options) {
     description: description && translate(description),
     modelProperty: 'tag',
     getProperty: function(element) {
-      return element.tag;
+      return getBusinessObject(element).tag;
     },
     setProperty: function(element, properties) {
 
       element = element.labelTarget || element;
-
-      element.tag = properties.tag;
 
       return cmdHelper.updateProperties(element, properties);
     },

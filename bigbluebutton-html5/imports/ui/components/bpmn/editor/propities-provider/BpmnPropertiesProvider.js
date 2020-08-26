@@ -23,8 +23,8 @@ function createGeneralTabGroups(
     label: translate('General'),
     entries: []
   };
-  // idProps(generalGroup, element, translate);
-  tagProps(generalGroup, element, translate);
+
+  idProps(generalGroup, element, translate);
   nameProps(generalGroup, element, bpmnFactory, canvas, translate);
   processProps(generalGroup, element, translate);
   executableProps(generalGroup, element, translate);
@@ -53,6 +53,25 @@ function createGeneralTabGroups(
 
 }
 
+function createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate) {
+
+  // Create a group called "BBB".
+  var BBBGroup = {
+    id: 'bbb',
+    label: 'BBB',
+    entries: []
+  };
+  // Add the spell props to the black magic group.
+  tagProps(BBBGroup, element, translate);
+
+  return [
+    BBBGroup
+  ];
+}
+
+
+
+
 function BpmnPropertiesProvider(
     eventBus, canvas, bpmnFactory, elementRegistry, translate) {
 
@@ -67,8 +86,15 @@ function BpmnPropertiesProvider(
         element, canvas, bpmnFactory, elementRegistry, translate)
     };
 
+    var bbbTab = {
+      id: 'bbb',
+      label: 'BBB',
+      groups: createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate)
+    };
+
     return [
-      generalTab
+      generalTab,
+      bbbTab
     ];
   };
 }

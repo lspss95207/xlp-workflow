@@ -1,0 +1,24 @@
+{
+  "name": "BBB",
+  "prefix": "bbb",
+  "uri": "http://bbb",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "Tag",
+      "extends": [
+        "bpmn:BaseElement"
+      ],
+      "properties": [
+        {
+          "name": "tag",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}
