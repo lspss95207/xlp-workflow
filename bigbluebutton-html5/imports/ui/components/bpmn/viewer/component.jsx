@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
+import BpmnJS from '../bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 
 import { styles } from './styles.scss';
 

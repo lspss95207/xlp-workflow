@@ -17,6 +17,11 @@
           "name": "tag",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "color",
+          "isAttr": true,
+          "type": "String"
         }
       ]
     }
