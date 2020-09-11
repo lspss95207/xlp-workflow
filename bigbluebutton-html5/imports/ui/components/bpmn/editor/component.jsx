@@ -115,7 +115,8 @@ export default class BpmnDiagramEditor extends React.Component {
 
 
   addListeners() {
-    this.createShapeListener = emitter.on('createShape', (message) => {
+
+    this.createShapeListener = emitter.on('createShape', (message, tags, color="white") => {
       console.log(message);
       const modeler = this.bpmnModeler;
       // (1) Get the modules
@@ -132,13 +133,23 @@ export default class BpmnDiagramEditor extends React.Component {
       const serviceTask = elementFactory.createShape({ type: 'bpmn:Task' });
       modeling.updateProperties(serviceTask, { name: message });
 
+
+
       var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
-      getBusinessObject(serviceTask).color="yellow"
+      getBusinessObject(serviceTask).color = color;
+
+      //TODO modify for tag object
+      getBusinessObject(serviceTask).tag = [];
+      tags.forEach((element) => {
+        getBusinessObject(serviceTask).tag.push(element.label)
+      });
+      
 
       console.log(serviceTask)
 
       // (4) Add the new service task shape to the diagram using `createShape` to connect it to an existing
       // shape
+      
       modeling.createShape(serviceTask, { x: 400, y: 100 }, process);
 
       modeler.saveXML({ format: true }, function(err, xml) {
@@ -147,7 +158,28 @@ export default class BpmnDiagramEditor extends React.Component {
       
     });
 
-    // this.updateShapeColorListener = 
+    this.updateShapeColorListener = emitter.on('updateShapeColor', (elementID, color) => {
+      const modeler = this.bpmnModeler;
+      const elementRegistry = modeler.get('elementRegistry');
+      const element = elementRegistry.get(elementID);
+      const eventBus = modeler.get('eventBus');
+
+      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+      getBusinessObject(element).color = color;
+      eventBus.fire('element.changed', { element: element });
+    });
+
+
+    this.updateShapeStrokeColorListener = emitter.on('updateShapeStrokeColor', (elementID, color) => {
+      const modeler = this.bpmnModeler;
+      const elementRegistry = modeler.get('elementRegistry');
+      const element = elementRegistry.get(elementID);
+      const eventBus = modeler.get('eventBus');
+
+      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+      getBusinessObject(element).strokeColor = color;
+      eventBus.fire('element.changed', { element: element });
+    });
 
   }
 
