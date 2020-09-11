@@ -121,7 +121,7 @@ class MessageWithDropdown extends PureComponent {
           //     emitter.emit('insertTag', x);
           //   }
           // });
-          emitter.emit('createShape', text);
+          emitter.emit('createShape', text, tags);
         }}
       />,
     ]);

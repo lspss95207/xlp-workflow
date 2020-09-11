@@ -22,7 +22,11 @@ module.exports = function(group, element, translate, options) {
 
       element = element.labelTarget || element;
 
-      return cmdHelper.updateProperties(element, properties);
+      if(properties.tag){
+        getBusinessObject(element).tag = properties.tag.split(",");
+      }
+
+      // return cmdHelper.updateProperties(element, properties);
     },
     validate: function(element, values) {
       // var idValue = values.id;
