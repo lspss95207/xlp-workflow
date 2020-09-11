@@ -8,7 +8,7 @@
   "associations": [],
   "types": [
     {
-      "name": "Tag",
+      "name": "BBB",
       "extends": [
         "bpmn:BaseElement"
       ],
@@ -20,6 +20,11 @@
         },
         {
           "name": "color",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "strokeColor",
           "isAttr": true,
           "type": "String"
         }
