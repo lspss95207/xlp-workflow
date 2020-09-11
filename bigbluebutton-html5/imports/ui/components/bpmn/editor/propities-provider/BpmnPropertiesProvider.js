@@ -11,6 +11,8 @@ var processProps = require('./parts/ProcessProps'),
     documentationProps = require('./parts/DocumentationProps'),
     idProps = require('./parts/IdProps'),
     tagProps = require('./parts/TagProps'),
+    colorProps = require('./parts/ColorProps'),
+    strokeColorProps = require('./parts/StrokeColorProps'),
     nameProps = require('./parts/NameProps'),
     executableProps = require('./parts/ExecutableProps');
 
@@ -53,7 +55,7 @@ function createGeneralTabGroups(
 
 }
 
-function createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate) {
+function createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate, eventBus) {
 
   // Create a group called "BBB".
   var BBBGroup = {
@@ -63,6 +65,8 @@ function createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, trans
   };
   // Add the spell props to the black magic group.
   tagProps(BBBGroup, element, translate);
+  colorProps(BBBGroup, element, translate, eventBus);
+  strokeColorProps(BBBGroup, element, translate, eventBus);
 
   return [
     BBBGroup
@@ -89,7 +93,7 @@ function BpmnPropertiesProvider(
     var bbbTab = {
       id: 'bbb',
       label: 'BBB',
-      groups: createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate)
+      groups: createBBBTabGroups(element, canvas, bpmnFactory, elementRegistry, translate, eventBus)
     };
 
     return [

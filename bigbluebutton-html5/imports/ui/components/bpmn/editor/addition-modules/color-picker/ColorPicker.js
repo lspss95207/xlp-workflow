@@ -47,6 +47,7 @@ import {
    * A handler updating an elements color.
    */
   function UpdateColorHandler() {
+    console.log("in")
   
     this.execute = function(context) {
       context.oldColor = context.element.color;

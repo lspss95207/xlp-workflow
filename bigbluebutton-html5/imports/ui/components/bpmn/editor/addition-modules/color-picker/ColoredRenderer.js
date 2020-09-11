@@ -26,16 +26,20 @@ export default function ColoredRenderer(
   );
 
   this.canRender = function(element) {
-    return is(element, 'bpmn:BaseElement') && getBusinessObject(element).color;
+    return is(element, 'bpmn:BaseElement');
   };
 
   this.drawShape = function(parent, shape) {
 
     var bpmnShape = this.drawBpmnShape(parent, shape);
     
-    var color = getBusinessObject(shape).color;
+    const color = getBusinessObject(shape).color ?? "white";
+    const strokeColor = getBusinessObject(shape).strokeColor ?? "black";
 
-    svgAttr(bpmnShape, { fill: color ,stroke: color});
+
+    svgAttr(bpmnShape, { fill: color, stroke: strokeColor});
+
+    eventBus.fire('element.changed', { element: bpmnShape });
 
     return bpmnShape;
   };
