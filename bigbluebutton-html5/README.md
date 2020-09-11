@@ -3,8 +3,8 @@ Fork from the bigbluebutton-html5 folder in https://github.com/bigbluebutton/big
 
 
 # BPMN Callable events
--Location: bigbluebutton-html5/imports/ui/components/bpmn/editor/component.jsx
--Usage: emitter.emit( [Event Name] , [Arguments]...)  
+- Location: bigbluebutton-html5/imports/ui/components/bpmn/editor/component.jsx
+- Usage: emitter.emit( [Event Name] , [Arguments]...)  
 
 | Event Name             | Arguments                          | Description                  |
 |------------------------|------------------------------------|------------------------------|
