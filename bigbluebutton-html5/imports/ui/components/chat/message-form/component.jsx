@@ -8,7 +8,7 @@ import _ from 'lodash';
 import TypingIndicatorContainer from './typing-indicator/container';
 import { styles } from './styles.scss';
 import Button from '../../button/component';
-import emitter from '/imports/ui/components/tag/events';
+import emitter from '/imports/utils/events';
 import Tag from '/imports/ui/components/tag/component';
 
 import logger from '/imports/startup/client/logger';

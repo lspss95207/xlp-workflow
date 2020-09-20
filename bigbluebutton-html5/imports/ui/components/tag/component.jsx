@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { styles } from './styles.scss';
-import emitter from '/imports/ui/components/tag/events';;
+import emitter from '/imports/utils/events';
 
 class Tag extends PureComponent {
   constructor(props) {

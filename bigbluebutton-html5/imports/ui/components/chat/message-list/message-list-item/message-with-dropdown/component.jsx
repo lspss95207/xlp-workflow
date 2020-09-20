@@ -11,7 +11,7 @@ import DropdownListItem from '/imports/ui/components/dropdown/list/item/componen
 import Message from '../message/component';
 
 import logger from '/imports/startup/client/logger';
-import emitter from '/imports/ui/components/tag/events';
+import emitter from '/imports/utils/events';
 import Tag from '/imports/ui/components/tag/component';
 
 class MessageWithDropdown extends PureComponent {
