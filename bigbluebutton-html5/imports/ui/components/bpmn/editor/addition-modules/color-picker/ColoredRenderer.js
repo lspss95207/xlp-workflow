@@ -11,6 +11,7 @@ import {
 } from '../../../bpmn-js/lib/util/ModelUtil';
 
 var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+var getExtension = require('../../lib/util/ModelUtil').getExtension;
 
 
 
@@ -26,15 +27,20 @@ export default function ColoredRenderer(
   );
 
   this.canRender = function(element) {
-    return is(element, 'bpmn:BaseElement');
+    var businessObject = getBusinessObject(element);
+    var styles = getExtension(businessObject, 'bbb:Styles');
+    return is(element, 'bpmn:BaseElement') && styles;
   };
 
   this.drawShape = function(parent, shape) {
 
     var bpmnShape = this.drawBpmnShape(parent, shape);
+
+    var businessObject = getBusinessObject(shape);
+    var styles = getExtension(businessObject, 'bbb:Styles');
     
-    const color = getBusinessObject(shape).color ?? "white";
-    const strokeColor = getBusinessObject(shape).strokeColor ?? "black";
+    const color = styles.color ?? "white";
+    const strokeColor = styles.strokeColor ?? "black";
 
 
     svgAttr(bpmnShape, { fill: color, stroke: strokeColor});

@@ -8,16 +8,37 @@
   "associations": [],
   "types": [
     {
-      "name": "BBB",
+      "name": "Properties",
       "extends": [
         "bpmn:BaseElement"
       ],
       "properties": [
         {
-          "name": "tag",
+          "name": "title",
           "isAttr": true,
           "type": "String"
         },
+        {
+          "name": "description",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "tags",
+          "isMany": true,
+          "type": "Tag"
+        },
+        {
+          "name": "time",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Styles",
+      "superClass": [ "Element" ],
+      "properties": [
         {
           "name": "color",
           "isAttr": true,
@@ -25,6 +46,37 @@
         },
         {
           "name": "strokeColor",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Tag",
+      "superClass": [ "Element" ],
+      "properties": [
+        {
+          "name": "id",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "label",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "description",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "removable",
+          "isAttr": true,
+          "type": "Boolean"
+        },
+        {
+          "name": "type",
           "isAttr": true,
           "type": "String"
         }

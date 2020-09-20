@@ -1,6 +1,6 @@
 import React from 'react';
 
-import emitter from '/imports/ui/components/tag/events';
+import emitter from '/imports/utils/events';
 
 import BpmnJS from '../bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import Modeler from '../bpmn-js/lib/Modeler';
@@ -116,70 +116,121 @@ export default class BpmnDiagramEditor extends React.Component {
 
   addListeners() {
 
-    this.createShapeListener = emitter.on('createShape', (message, tags, color="white") => {
-      console.log(message);
+    this.createShapeListener = emitter.on('createShape', (message, tags, style={color: 'white', strokeColor: 'black'}) => {
       const modeler = this.bpmnModeler;
       // (1) Get the modules
       const bpmnFactory = modeler.get('bpmnFactory');
       const elementFactory = modeler.get('elementFactory');
       const elementRegistry = modeler.get('elementRegistry');
       const modeling = modeler.get('modeling');
+      const moddle = modeler.get('moddle');
 
       // (2) Get the existing process and the start event
       const process = elementRegistry.get('Process_1');
       const startEvent = elementRegistry.get('StartEvent_1');
 
       // (3) Create a service task shape
-      const serviceTask = elementFactory.createShape({ type: 'bpmn:Task' });
-      modeling.updateProperties(serviceTask, { name: message });
+      const element = elementFactory.createShape({ type: 'bpmn:Task' });
+      modeling.updateProperties(element, { name: message });
 
-
-
-      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
-      getBusinessObject(serviceTask).color = color;
-
-      //TODO modify for tag object
-      getBusinessObject(serviceTask).tag = [];
-      tags.forEach((element) => {
-        getBusinessObject(serviceTask).tag.push(element.label)
-      });
-      
-
-      console.log(serviceTask)
 
       // (4) Add the new service task shape to the diagram using `createShape` to connect it to an existing
       // shape
       
-      modeling.createShape(serviceTask, { x: 400, y: 100 }, process);
+      modeling.createShape(element, { x: 400, y: 100 }, process);
 
+
+      emitter.emit('setShapeStyles', element.id, style);
+      emitter.emit('setShapeTags', element.id, tags);
+
+      console.log(element)
+
+      //for test
       modeler.saveXML({ format: true }, function(err, xml) {
         console.log(xml)
       });
       
     });
 
-    this.updateShapeColorListener = emitter.on('updateShapeColor', (elementID, color) => {
+    this.setShapeTagsListener =  emitter.on('setShapeTags', (elementID, tags) => {
+      //TODO modify for tag object
+      const modeler = this.bpmnModeler;
+      const elementRegistry = modeler.get('elementRegistry');
+      const element = elementRegistry.get(elementID);
+      const eventBus = modeler.get('eventBus');
+      const moddle = modeler.get('moddle');
+
+      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+      var getExtension = require('./lib/util/ModelUtil').getExtension;
+
+      var businessObject = getBusinessObject(element);
+
+      console.log(businessObject)
+
+      businessObject.tags = [];
+
+      console.log(businessObject.tags)
+      tags.forEach((element) => {
+        var tag = moddle.create('bbb:Tag',{
+          id: element.id,
+          label: element.label,
+          description: element.description,
+          removable: element.removable,
+          type: element.type
+        })
+        console.log(tag);
+        businessObject.tags.push(tag);
+      });
+    });
+
+    this.createShapePropertyListener = emitter.on('createShapeProperty', (elementID, propertyName) => {
+      const modeler = this.bpmnModeler;
+      const elementRegistry = modeler.get('elementRegistry');
+      const element = elementRegistry.get(elementID);
+      const eventBus = modeler.get('eventBus');
+      const moddle = modeler.get('moddle');
+
+      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
+      var getExtension = require('./lib/util/ModelUtil').getExtension;
+
+      var businessObject = getBusinessObject(element);
+      var property = getExtension(businessObject, propertyName);
+      if (!property) {
+        property = moddle.create(propertyName);
+        businessObject.extensionElements = businessObject.extensionElements || moddle.create('bpmn:ExtensionElements');
+        businessObject.extensionElements.get('values').push(property);
+      }
+    });
+
+
+    this.setShapeStylesListener = emitter.on('setShapeStyles', (elementID, style) => {
       const modeler = this.bpmnModeler;
       const elementRegistry = modeler.get('elementRegistry');
       const element = elementRegistry.get(elementID);
       const eventBus = modeler.get('eventBus');
 
       var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
-      getBusinessObject(element).color = color;
+      var getExtension = require('./lib/util/ModelUtil').getExtension;
+
+      var businessObject = getBusinessObject(element);
+      emitter.emit('createShapeProperty', elementID, 'bbb:Styles');
+      var styles = getExtension(businessObject, 'bbb:Styles');
+      console.log(styles)
+
+
+      if(style.color){
+        styles.color = style.color;
+      }
+      if(style.strokeColor){
+        styles.strokeColor = style.strokeColor;
+      }
+      
+
+
       eventBus.fire('element.changed', { element: element });
     });
 
 
-    this.updateShapeStrokeColorListener = emitter.on('updateShapeStrokeColor', (elementID, color) => {
-      const modeler = this.bpmnModeler;
-      const elementRegistry = modeler.get('elementRegistry');
-      const element = elementRegistry.get(elementID);
-      const eventBus = modeler.get('eventBus');
-
-      var getBusinessObject = require('bpmn-js/lib/util/ModelUtil').getBusinessObject;
-      getBusinessObject(element).strokeColor = color;
-      eventBus.fire('element.changed', { element: element });
-    });
 
   }
 

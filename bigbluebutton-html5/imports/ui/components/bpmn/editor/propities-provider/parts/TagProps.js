@@ -16,15 +16,17 @@ module.exports = function(group, element, translate, options) {
     description: description && translate(description),
     modelProperty: 'tag',
     getProperty: function(element) {
-      return getBusinessObject(element).tag;
+      if(getBusinessObject(element).tags){
+        var str = "";
+        getBusinessObject(element).tags.forEach(element => {
+          str += element.label+" ";
+        });
+        return str
+      }else{
+        return null;
+      }
     },
     setProperty: function(element, properties) {
-
-      element = element.labelTarget || element;
-
-      if(properties.tag){
-        getBusinessObject(element).tag = properties.tag.split(",");
-      }
 
       // return cmdHelper.updateProperties(element, properties);
     },
